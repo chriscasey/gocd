@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="115">
+  <server artifactsdir="artifacts" agentAutoRegisterKey="c813a5aa-d369-41fe-8027-6972b679f0d5" webhookSecret="cada53b6-4833-43e1-8cc2-6b4c2b2759df" commandRepositoryLocation="default" serverId="aad4b2a5-6c8f-4005-8cf8-c3a9f19fef47" tokenGenerationKey="84a7b8e0-d206-4398-a673-279dc29438ee">
+    <backup emailOnSuccess="true" emailOnFailure="true" />
+  </server>
+  <config-repos>
+    <config-repo pluginId="json.config.plugin" id="gocd-demo-config-repo-json">
+      <git url="https://github.com/arvindsv/gocd-demo-config-repo-json.git" />
+    </config-repo>
+    <config-repo pluginId="yaml.config.plugin" id="gocd-yaml-config-example">
+      <git url="https://github.com/tomzo/gocd-yaml-config-example.git" />
+    </config-repo>
+  </config-repos>
+  <pipelines group="gocd-example">
+    <pipeline name="build-dev">
+      <materials>
+        <git url="https://github.com/gocd-contrib/getting-started-repo.git" />
+      </materials>
+      <stage name="build-stage">
+        <jobs>
+          <job name="build">
+            <tasks>
+              <exec command="./build" />
+            </tasks>
+            <tabs>
+              <tab name="BuildResult" path="my-artifact.html" />
+            </tabs>
+            <artifacts>
+              <artifact type="build" src="my-artifact.html" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="run-unit-tests">
+        <jobs>
+          <job name="run-unit-test-1">
+            <tasks>
+              <exec command="echo">
+                <arg>unit test 1 - passed</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="echo">
+                <arg>unit test 2 - passed</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="regression-test-dev">
+      <materials>
+        <pipeline pipelineName="build-dev" stageName="run-unit-tests" />
+      </materials>
+      <stage name="regression-test-dev-stage">
+        <jobs>
+          <job name="regression-test-job-dev">
+            <tasks>
+              <exec command="echo">
+                <arg>regression-test-1 - passed</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="smoke-tests-dev">
+      <materials>
+        <pipeline pipelineName="build-dev" stageName="run-unit-tests" />
+      </materials>
+      <stage name="smoke-test-dev-stage">
+        <jobs>
+          <job name="regression-test-job-dev">
+            <tasks>
+              <exec command="echo">
+                <arg>smoke-test-1 - passed</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="echo">
+                <arg>smoke-test-2 - passed</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="integration-tests-dev">
+      <materials>
+        <pipeline pipelineName="build-dev" stageName="run-unit-tests" />
+      </materials>
+      <stage name="integrations-test-dev-stage">
+        <jobs>
+          <job name="integration-test-job-dev">
+            <tasks>
+              <exec command="echo">
+                <arg>integration-test-1 - passed</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="echo">
+                <arg>integration-test-2 - passed</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="deploy-dev-instance">
+      <materials>
+        <pipeline pipelineName="integration-tests-dev" stageName="integrations-test-dev-stage" />
+        <pipeline pipelineName="regression-test-dev" stageName="regression-test-dev-stage" />
+        <pipeline pipelineName="smoke-tests-dev" stageName="smoke-test-dev-stage" />
+      </materials>
+      <stage name="prepare-deploy-dev">
+        <jobs>
+          <job name="deploy-dev">
+            <tasks>
+              <exec command="echo">
+                <arg>preparing dev instance...</arg>
+                <arg />
+                <arg>done</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="deploy-dev">
+        <approval type="manual" />
+        <jobs>
+          <job name="deploy-ephemeral-dev-server">
+            <tasks>
+              <exec command="echo">
+                <arg>Deploying ephemeral-dev-server...</arg>
+                <arg />
+                <arg>ephemeral-dev-server available at: http://someip:someport/api</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="destroy-dev">
+        <approval type="manual" />
+        <jobs>
+          <job name="destroy-dev-instance">
+            <tasks>
+              <exec command="echo">
+                <arg>destroying dev instance...</arg>
+                <arg />
+                <arg>done</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <pipelines group="demo" />
+  <pipelines group="yaml-example" />
+  <pipelines group="simple" />
+  <environments>
+    <environment name="example" />
+  </environments>
+  <agents>
+    <agent hostname="d1e8a3a64723" ipaddress="172.17.0.3" uuid="c6491cbd-4515-4b25-ae3a-d30be9f1281d" />
+  </agents>
+</cruise>
