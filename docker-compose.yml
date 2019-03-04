@@ -14,7 +14,7 @@ services:
     depends_on:
       - "go-server"
     environment:
-      AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
+      AGENT_AUTO_REGISTER_KEY: 'defaultAutoAgentRegisterKeyChangeMe'
       GO_SERVER_URL: https://go-server:8154/go
   # go-agent2:
   #   image: gocd/gocd-agent-alpine-3.8:v19.1.0
@@ -23,5 +23,5 @@ services:
   #   depends_on:
   #     - "go-server"
   #   environment:
-  #     AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
+  #     AGENT_AUTO_REGISTER_KEY: 'defaultAutoAgentRegisterKeyChangeMe'
   #     GO_SERVER_URL: https://go-server:8154/go
