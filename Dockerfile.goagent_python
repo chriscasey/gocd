@@ -1,0 +1,15 @@
+FROM gocd/gocd-agent-ubuntu-18.04:v19.2.0
+
+# runtime dependencies
+RUN apt update && apt upgrade -y \
+    && apt install python3.7 python3.7-dev python 3.7-venv python3-setuptools python3-testresources python3-pip -y
+RUN curl --silent https://bootstrap.pypa.io/get-pip.py | python3.7
+
+# install django
+RUN pip3 install Django
+
+# install pipenv
+RUN pip3 install pipenv
+
+
+    
