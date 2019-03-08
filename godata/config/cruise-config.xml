@@ -8,11 +8,12 @@
       <git url="https://github.com/chriscasey/gocd-yaml-config-example.git" />
     </config-repo>
   </config-repos>
-  <pipelines group="simple" />
+  <pipelines group="gocd-example" />
   <environments>
     <environment name="example" />
   </environments>
   <agents>
-    <agent hostname="bcc599324ed2" ipaddress="172.31.0.3" uuid="5a440fae-937a-4de0-9f79-09559f4c82fc" />
+    <agent hostname="3e5cbfcf988d" ipaddress="172.21.0.3" uuid="21a9c98a-6506-435a-9ee1-b46cb9777c00" />
+    <agent hostname="80d239b54ac0" ipaddress="172.21.0.3" uuid="3c86c64d-4b59-4d4e-a1ec-cfd3d043f0f1" />
   </agents>
 </cruise>

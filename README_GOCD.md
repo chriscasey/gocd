@@ -14,7 +14,7 @@ docker run --name angry_feynman -d -p8153:8153 -p8154:8154 gocd/gocd-server:v19.
 1. Start a container
 
 ```
-docker run -d -e GO_SERVER_URL=https://$(docker inspect --format='{{(index (index .NetworkSettings.IPAddress))}}' angry_feynman):8154/go gocd/gocd-agent-alpine-3.8:v19.1.0
+docker run -d -e GO_SERVER_URL=https://$(docker inspect --format='{{(index (index .NetworkSettings.IPAddress))}}' angry_feynman):8154/go gocd/gocd-agent-ubuntu-18.04:v19.2.0
 
 ```
 
