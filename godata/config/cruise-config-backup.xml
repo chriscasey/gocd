@@ -11,10 +11,4 @@
       <git url="https://github.com/tomzo/gocd-yaml-config-example.git" />
     </config-repo>
   </config-repos>
-  <pipelines group="yaml-example" />
-  <pipelines group="simple" />
-  <pipelines group="demo" />
-  <environments>
-    <environment name="example" />
-  </environments>
 </cruise>

@@ -15,5 +15,7 @@
   <agents>
     <agent hostname="3e5cbfcf988d" ipaddress="172.21.0.3" uuid="21a9c98a-6506-435a-9ee1-b46cb9777c00" />
     <agent hostname="80d239b54ac0" ipaddress="172.21.0.3" uuid="3c86c64d-4b59-4d4e-a1ec-cfd3d043f0f1" />
+    <agent hostname="901dc1067335" ipaddress="172.22.0.3" uuid="8c150399-0c0c-4dc2-aa14-57cee735b2a8" />
+    <agent hostname="66e8b123480c" ipaddress="172.23.0.3" uuid="50b77bed-d6e9-4122-af61-838035f1c472" />
   </agents>
 </cruise>

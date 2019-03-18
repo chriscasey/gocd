@@ -5,19 +5,25 @@ services:
     ports:
       - "8153:8153"
       - "8154:8154"
-    volumes:
-      - ./godata/config/cruise-config.xml:/godata/config/cruise-config.xml
+    # volumes:
+    #   - ./godata/config/cruise-config.xml:/godata/config/cruise-config.xml
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: tutorial
+        awslogs-region: us-west-1
+        awslogs-stream-prefix: gocd-chris
   
-  go-agent-python2:
-    build:
-      context: .
-      dockerfile: Dockerfile.goagent_python
-    links:
-      - go-server
-    depends_on:
-      - go-server  
-    environment:
-      AGENT_AUTO_REGISTER_KEY: '123456789abcdef'
-      AGENT_AUTO_REGISTER_RESOURCES: 'gradle,java,python'
-      GO_SERVER_URL: https://go-server:8154/go
+  # go-agent-python2:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.goagent_python
+  #   links:
+  #     - go-server
+  #   depends_on:
+  #     - go-server  
+  #   environment:
+  #     AGENT_AUTO_REGISTER_KEY: '123456789abcdef'
+  #     AGENT_AUTO_REGISTER_RESOURCES: 'gradle,java,python'
+  #     GO_SERVER_URL: https://go-server:8154/go
 
